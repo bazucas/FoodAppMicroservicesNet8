@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Services.CouponApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Web", "Tasko.Web\Tasko.Web.csproj", "{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Services.AuthApi", "Tasko.Services.AuthApi\Tasko.Services.AuthApi.csproj", "{76A1EC5C-40AB-48ED-933E-02884A3D944A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Gateway", "Tasko.Gateway\Tasko.Gateway.csproj", "{11A0A43D-C13F-4900-BA31-F0370AB84A68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Integration.MessageBus", "Tasko.Integration.MessageBus\Tasko.Integration.MessageBus.csproj", "{729554FF-703E-4926-A7C2-6CAD8C035855}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +35,18 @@ Global
 		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A1EC5C-40AB-48ED-933E-02884A3D944A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A1EC5C-40AB-48ED-933E-02884A3D944A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A1EC5C-40AB-48ED-933E-02884A3D944A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A1EC5C-40AB-48ED-933E-02884A3D944A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11A0A43D-C13F-4900-BA31-F0370AB84A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11A0A43D-C13F-4900-BA31-F0370AB84A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11A0A43D-C13F-4900-BA31-F0370AB84A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11A0A43D-C13F-4900-BA31-F0370AB84A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729554FF-703E-4926-A7C2-6CAD8C035855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729554FF-703E-4926-A7C2-6CAD8C035855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729554FF-703E-4926-A7C2-6CAD8C035855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729554FF-703E-4926-A7C2-6CAD8C035855}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +54,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7} = {FE4AAAA6-9231-473A-9B54-194ADCEBAC36}
 		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46} = {8EB3BF41-C4CE-4057-9A5D-C413D0B0A1CF}
+		{76A1EC5C-40AB-48ED-933E-02884A3D944A} = {FE4AAAA6-9231-473A-9B54-194ADCEBAC36}
+		{11A0A43D-C13F-4900-BA31-F0370AB84A68} = {A030D768-B14D-4249-86EE-FBEA31C995FF}
+		{729554FF-703E-4926-A7C2-6CAD8C035855} = {8E15B76B-4597-4346-9019-651AC34A070E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1F72308-26ED-490D-A6A9-E37A0E5030B5}

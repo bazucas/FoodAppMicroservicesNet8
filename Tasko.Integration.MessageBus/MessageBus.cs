@@ -7,7 +7,7 @@ namespace Tasko.Integration.MessageBus;
 public class MessageBus : IMessageBus
 {
     private readonly string connectionString =
-        "Endpoint=sb://taskoweb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=HjoslS58pPHtAULb0tay/jx4Ys0+MO5/R+ASbCcFTG0=";
+        "Endpoint=sb://taskoweb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=[code_here]";
 
     public async Task PublishMessage(object message, string? topic_queue_Name)
     {

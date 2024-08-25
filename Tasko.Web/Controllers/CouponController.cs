@@ -1,21 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Newtonsoft.Json;
 using Tasko.Web.Models;
 using Tasko.Web.Service.IService;
 
 namespace Tasko.Web.Controllers;
 
-public class CouponController(ICouponService couponService) : Controller
+public class CouponController : Controller
 {
+    private readonly ICouponService _couponService;
+    public CouponController(ICouponService couponService)
+    {
+        _couponService = couponService;
+    }
+
+
     public async Task<IActionResult> CouponIndex()
     {
-        List<CouponDto>? list = [];
+        List<CouponDto>? list = new();
 
-        ResponseDto? response = await couponService.GetAllCouponsAsync();
+        ResponseDto? response = await _couponService.GetAllCouponsAsync();
 
-        if (response is { IsSuccess: true })
+        if (response != null && response.IsSuccess)
         {
-            list = JsonSerializer.Deserialize<List<CouponDto>>(Convert.ToString(response.Result) ?? string.Empty);
+            list = JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result));
         }
         else
         {
@@ -33,49 +40,54 @@ public class CouponController(ICouponService couponService) : Controller
     [HttpPost]
     public async Task<IActionResult> CouponCreate(CouponDto model)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            return View(model);
+            ResponseDto? response = await _couponService.CreateCouponsAsync(model);
+
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "Coupon created successfully";
+                return RedirectToAction(nameof(CouponIndex));
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
         }
-
-        ResponseDto? response = await couponService.CreateCouponsAsync(model);
-
-        if (response is { IsSuccess: true })
-        {
-            TempData["success"] = "Coupon created successfully";
-            return RedirectToAction(nameof(CouponIndex));
-        }
-
-        TempData["error"] = response?.Message;
         return View(model);
     }
 
     public async Task<IActionResult> CouponDelete(int couponId)
     {
-        ResponseDto? response = await couponService.GetCouponByIdAsync(couponId);
+        ResponseDto? response = await _couponService.GetCouponByIdAsync(couponId);
 
-        if (response is { IsSuccess: true })
+        if (response != null && response.IsSuccess)
         {
-            CouponDto? model = JsonSerializer.Deserialize<CouponDto>(Convert.ToString(response.Result) ?? string.Empty);
+            CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result));
             return View(model);
         }
-
-        TempData["error"] = response?.Message;
+        else
+        {
+            TempData["error"] = response?.Message;
+        }
         return NotFound();
     }
 
     [HttpPost]
     public async Task<IActionResult> CouponDelete(CouponDto couponDto)
     {
-        ResponseDto? response = await couponService.DeleteCouponsAsync(couponDto.CouponId);
+        ResponseDto? response = await _couponService.DeleteCouponsAsync(couponDto.CouponId);
 
-        if (response is { IsSuccess: true })
+        if (response != null && response.IsSuccess)
         {
             TempData["success"] = "Coupon deleted successfully";
             return RedirectToAction(nameof(CouponIndex));
         }
-
-        TempData["error"] = response?.Message;
+        else
+        {
+            TempData["error"] = response?.Message;
+        }
         return View(couponDto);
     }
+
 }

@@ -1,13 +1,14 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 using System.Text;
-using System.Text.Json;
 using Tasko.Web.Models;
 using Tasko.Web.Service.IService;
 using Tasko.Web.Utility;
 
 namespace Tasko.Web.Service;
 
-public class BaseService(IHttpClientFactory httpClientFactory) : IBaseService
+public class BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
+    : IBaseService
 {
     public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
     {
@@ -15,45 +16,76 @@ public class BaseService(IHttpClientFactory httpClientFactory) : IBaseService
         {
             HttpClient client = httpClientFactory.CreateClient("TaskoAPI");
             HttpRequestMessage message = new();
-
-            message.Headers.Add("Accept",
-                requestDto.ContentType == ContentType.MultipartFormData ? "*/*" : "application/json");
+            if (requestDto.ContentType == SD.ContentType.MultipartFormData)
+            {
+                message.Headers.Add("Accept", "*/*");
+            }
+            else
+            {
+                message.Headers.Add("Accept", "application/json");
+            }
+            //token
+            if (withBearer)
+            {
+                var token = tokenProvider.GetToken();
+                message.Headers.Add("Authorization", $"Bearer {token}");
+            }
 
             message.RequestUri = new Uri(requestDto.Url);
 
-            if (requestDto.ContentType == ContentType.MultipartFormData)
+            if (requestDto.ContentType == SD.ContentType.MultipartFormData)
             {
                 var content = new MultipartFormDataContent();
 
                 foreach (var prop in requestDto.Data.GetType().GetProperties())
                 {
                     var value = prop.GetValue(requestDto.Data);
-
-                    if (value is FormFile file)
+                    if (value is FormFile)
                     {
-                        content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
+                        var file = (FormFile)value;
+                        if (file != null)
+                        {
+                            content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
+                        }
                     }
                     else
                     {
-                        content.Add(new StringContent((value == null ? "" : value.ToString()) ?? string.Empty), prop.Name);
+                        content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
                     }
                 }
                 message.Content = content;
             }
             else
             {
-                message.Content = new StringContent(JsonSerializer.Serialize(requestDto.Data), Encoding.UTF8, "application/json");
+                if (requestDto.Data != null)
+                {
+                    message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
+                }
             }
 
-            message.Method = requestDto.ApiType switch
-            {
-                ApiType.POST => HttpMethod.Post,
-                ApiType.DELETE => HttpMethod.Delete,
-                ApiType.PUT => HttpMethod.Put,
-                _ => HttpMethod.Get
-            };
 
-            HttpResponseMessage? apiResponse = await client.SendAsync(message);
+
+
+
+            HttpResponseMessage? apiResponse = null;
+
+            switch (requestDto.ApiType)
+            {
+                case SD.ApiType.POST:
+                    message.Method = HttpMethod.Post;
+                    break;
+                case SD.ApiType.DELETE:
+                    message.Method = HttpMethod.Delete;
+                    break;
+                case SD.ApiType.PUT:
+                    message.Method = HttpMethod.Put;
+                    break;
+                default:
+                    message.Method = HttpMethod.Get;
+                    break;
+            }
+
+            apiResponse = await client.SendAsync(message);
 
             switch (apiResponse.StatusCode)
             {
@@ -67,7 +99,7 @@ public class BaseService(IHttpClientFactory httpClientFactory) : IBaseService
                     return new() { IsSuccess = false, Message = "Internal Server Error" };
                 default:
                     var apiContent = await apiResponse.Content.ReadAsStringAsync();
-                    var apiResponseDto = JsonSerializer.Deserialize<ResponseDto>(apiContent);
+                    var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
                     return apiResponseDto;
             }
         }
@@ -75,7 +107,7 @@ public class BaseService(IHttpClientFactory httpClientFactory) : IBaseService
         {
             var dto = new ResponseDto
             {
-                Message = ex.Message,
+                Message = ex.Message.ToString(),
                 IsSuccess = false
             };
             return dto;

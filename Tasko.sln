@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FE4AAAA6-9231-473A-9B54-194ADCEBAC36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Services.CouponApi", "Tasko.Services.CouponApi\Tasko.Services.CouponApi.csproj", "{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Services.CouponApi", "Tasko.Services.CouponApi\Tasko.Services.CouponApi.csproj", "{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tasko.Web", "Tasko.Web\Tasko.Web.csproj", "{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5DF38D0F-6E47-4AC5-81E7-D336C5D2B0C7} = {FE4AAAA6-9231-473A-9B54-194ADCEBAC36}
+		{DA1E79C6-48F3-48BA-A574-5B34F3AC4E46} = {8EB3BF41-C4CE-4057-9A5D-C413D0B0A1CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1F72308-26ED-490D-A6A9-E37A0E5030B5}

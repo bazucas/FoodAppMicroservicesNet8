@@ -5,6 +5,7 @@ root = true
 [*.cs]
 csharp_new_line_before_open_brace = namespace, types
 dotnet_code_quality_unused_members = none
+dotnet_style_require_accessibility_modifiers = never
 
 #### Core EditorConfig Options ####
 

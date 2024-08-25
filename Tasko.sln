@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{A030
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{8E15B76B-4597-4346-9019-651AC34A070E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{FE4AAAA6-9231-473A-9B54-194ADCEBAC36}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{FE4AAAA6-9231-473A-9B54-194ADCEBAC36}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
